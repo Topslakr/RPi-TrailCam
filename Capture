@@ -1,0 +1,41 @@
+#!/bin/bash
+
+#### You Need to Edit these Three Variables for Rsync ###
+### You will also need to setup password-less ssh for this to work automatically ###
+rsyncuser=topslakr
+#FQDN or IP Address will work fine.
+rsyncserver=WDR-Storage.wdr.local
+#Destination folder on the remote system
+rsyncdest=/Storage/Temp/
+
+
+#Create variables
+movement=/home/topslakr/movement
+DATE=$(date +"%D %H:%M %S")
+FILEDATE=$(date +%a_%b_%d_%H%M_%S)
+rsyncvariable="$rsyncuser@$rsyncserver:$rsyncdest"
+
+#Print full rsync remote path
+echo "Full RSync Destination"
+echo $rsyncvariable
+
+
+#Check for 'movement' file, indicating motion has been detected.
+if test -f "$movement"; then
+	echo "Movement Detected! "$DATE""
+
+	#Take Single Image, stored to RAM Disk
+	libcamera-still -n --tuning-file /usr/share/libcamera/ipa/raspberrypi/imx708.json --autofocus-mode auto -q 50 -o /images/$FILEDATE.jpg --rotation 180
+
+	#Transfer Image to Server, and remove
+	rsync -avzpP --remove-source-files /images/* $rsyncvariable
+
+	#Delete Movement File
+	rm "$movement"
+	exec "./Capture"
+else
+	echo "No Movement File. "$DATE""
+	sleep 2
+	exec "./Capture"
+
+fi
