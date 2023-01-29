@@ -1,17 +1,18 @@
 #!/bin/python3
 
+### Set this variable to be the same in both scripts ###
+movement = '/images/movement'
+
+### This needs to be the correct GPIO pin for the PIR Sensor ###
+### GPIO 23 is pin 16 ###
+pir = MotionSensor(23)
+
 #Import Modules
 import time
 from datetime import datetime
 from pathlib import Path
 from gpiozero import MotionSensor
 import os
-
-#Script Variables
-movement = '/home/topslakr/movement'
-#Define Pin used for PIR Detection
-pir = MotionSensor(23)
-
 
 #Actions to take when PIR detects motion
 def MotionDetect():
@@ -22,7 +23,7 @@ def MotionDetect():
   print('There was a movement!', dt)
   print('Will Write imovement file')
   #Create File for Capture Process to Use
-  Path("/home/topslakr/movement").touch()
+  Path(movement).touch()
 
 #Core loop of Script.
 #Checks to see if Cap process is triggered.
