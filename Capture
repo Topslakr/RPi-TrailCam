@@ -2,9 +2,9 @@
 
 #### You Need to Edit these Three Variables for Rsync ###
 ### You will also need to setup password-less ssh for this to work automatically ###
-rsyncuser=topslakr
+rsyncuser=username
 #FQDN or IP Address will work fine.
-rsyncserver=WDR-Storage.wdr.local
+rsyncserver=you.server.add.ress
 #Destination folder on the remote system
 rsyncdest=/Storage/Temp/
 
