@@ -8,7 +8,8 @@ These scripts are written for a Raspberry Pi. I am using a Pi Zero with Raspberr
 My goal for this is to have it running on battery power for a couple of days. I will continue to develop the Capture side so that, when motion is detected, it will use a Cellular connection to send me a low res JPG file, and then capture a video or a series of high quality images that it will store locally. Right now, for testing, it's just on my home WiFi.
 
 To help minimize SD card writes, I create a small RAM disk on boot where I do any non-permanent writes. I create this with the below line in the /etc/fstab file. You can set the size to anything you want, but it is using system RAM. The data will be lost when the systems reboots. But, the RAM disk only uses RAM when data is actually stored. It doesn't pre-allocate the space, so you system will have access to any RAM not being actively used by files. Be careful not to exhuast the available RAM!
-<code>image_storage           /images        tmpfs   size=256M          0       0</code>
+
+<br><code>image_storage           /images        tmpfs   size=256M          0       0</code>
 
 You'll see I keep the 'movement' trigger file in this location, and the JPG for uploading. Images I want to store permentaly will be loaded to the SD card.
 
